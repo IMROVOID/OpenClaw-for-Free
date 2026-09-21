@@ -26,11 +26,27 @@ export class SshTerminalLauncher {
 
     try {
       const cmdStr = this.buildSshCommand(cleanTarget, label, providerName);
-      const child = spawn('cmd.exe', ['/c', 'start', 'cmd.exe', '/k', cmdStr], {
-        detached: true,
-        stdio: 'ignore'
-      });
-      child.unref();
+      let child: ReturnType<typeof spawn> | null = null;
+      if (process.platform === 'win32') {
+        child = spawn('cmd.exe', ['/c', 'start', 'cmd.exe', '/k', cmdStr], {
+          detached: true,
+          stdio: 'ignore'
+        });
+      } else if (process.platform === 'darwin') {
+        child = spawn('osascript', ['-e', `tell application "Terminal" to do script "${cmdStr.replace(/"/g, '\\"')}"`], {
+          detached: true,
+          stdio: 'ignore'
+        });
+      } else {
+        child = spawn('x-terminal-emulator', ['-e', cmdStr], {
+          detached: true,
+          stdio: 'ignore'
+        });
+      }
+      if (child) {
+        child.on('error', () => {});
+        child.unref();
+      }
       return true;
     } catch (_) {
       return false;

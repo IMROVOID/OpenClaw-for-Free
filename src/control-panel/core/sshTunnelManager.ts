@@ -254,9 +254,22 @@ export class SshTunnelManager {
 
   static copyToClipboard(text: string): void {
     try {
-      const proc = spawn('clip');
-      proc.stdin.write(text);
-      proc.stdin.end();
+      let proc: ReturnType<typeof spawn> | null = null;
+      if (process.platform === 'win32') {
+        proc = spawn('clip');
+      } else if (process.platform === 'darwin') {
+        proc = spawn('pbcopy');
+      } else {
+        proc = spawn('xclip', ['-selection', 'clipboard']);
+      }
+      if (proc) {
+        proc.on('error', () => {});
+        if (proc.stdin) {
+          proc.stdin.on('error', () => {});
+          proc.stdin.write(text);
+          proc.stdin.end();
+        }
+      }
     } catch (_) {}
   }
 
@@ -265,13 +278,19 @@ export class SshTunnelManager {
       const parsed = new URL(url);
       if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return;
       const targetUrl = parsed.href;
+      let child: ReturnType<typeof spawn> | null = null;
       if (process.platform === 'win32') {
-        spawn('cmd.exe', ['/c', 'start', '""', targetUrl], { detached: true, stdio: 'ignore' });
+        child = spawn('cmd.exe', ['/c', 'start', '""', targetUrl], { detached: true, stdio: 'ignore' });
       } else if (process.platform === 'darwin') {
-        spawn('open', [targetUrl], { detached: true, stdio: 'ignore' });
+        child = spawn('open', [targetUrl], { detached: true, stdio: 'ignore' });
       } else {
-        spawn('xdg-open', [targetUrl], { detached: true, stdio: 'ignore' });
+        child = spawn('xdg-open', [targetUrl], { detached: true, stdio: 'ignore' });
+      }
+      if (child) {
+        child.on('error', () => {});
+        child.unref();
       }
     } catch (_) {}
   }
 }
+
