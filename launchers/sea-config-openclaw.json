@@ -1,0 +1,5 @@
+{
+  "main": "openclaw-connect.cjs",
+  "output": "sea-prep-openclaw.blob",
+  "disableExperimentalSEAWarning": true
+}

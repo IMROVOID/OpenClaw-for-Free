@@ -1,0 +1,123 @@
+name: Test & CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      skip_tests:
+        description: 'Skip running automated tests'
+        type: boolean
+        required: false
+        default: false
+      build_binaries:
+        description: 'Build standalone executables for all platforms'
+        type: boolean
+        default: false
+      panel_only:
+        description: 'Build only OpenClaw-Control-Panel (skip legacy launchers)'
+        type: boolean
+        default: false
+
+jobs:
+  test:
+    name: Run Automated Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Run test suite
+        if: |
+          inputs.skip_tests != true &&
+          !contains(github.event.head_commit.message, '[skip test]') &&
+          !contains(github.event.head_commit.message, '[skip tests]') &&
+          !contains(github.event.head_commit.message, '[skip-test]') &&
+          !contains(github.event.head_commit.message, '[skip-tests]')
+        run: npm test
+
+      - name: Skip tests notice
+        if: |
+          inputs.skip_tests == true ||
+          contains(github.event.head_commit.message, '[skip test]') ||
+          contains(github.event.head_commit.message, '[skip tests]') ||
+          contains(github.event.head_commit.message, '[skip-test]') ||
+          contains(github.event.head_commit.message, '[skip-tests]')
+        run: echo "ℹ️ Automated tests skipped via skip flag."
+
+      - name: Verify build bundles
+        run: npm run build
+
+  build:
+    name: Build Standalone Executables (${{ matrix.artifact_name }})
+    needs: test
+    if: github.event_name == 'workflow_dispatch' && (inputs.build_binaries == true || inputs.build_binaries == 'true')
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            artifact_name: windows-x64
+          - os: ubuntu-latest
+            artifact_name: linux-x64
+          - os: macos-latest
+            artifact_name: macos-x64
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Build Standalone Executables
+        shell: bash
+        run: |
+          if [ "${{ inputs.panel_only }}" = "true" ]; then
+            npx tsx launchers/build.ts --panel
+          else
+            npx tsx launchers/build.ts
+          fi
+
+      - name: Upload Unlisted Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: openclaw-binaries-${{ matrix.artifact_name }}
+          path: |
+            bin/OpenClaw-Control-Panel*
+            bin/OpenClaw-Connect*
+            bin/OmniRoute-Connect*
+            bin/Llama-WebUI-Connect*
+          retention-days: 30
+          if-no-files-found: warn

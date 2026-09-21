@@ -1,0 +1,22 @@
+{
+  "name": "bot-response-formatter",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.ts",
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "npx esbuild index.ts --bundle --platform=node --format=esm --target=node22 --outfile=dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  }
+}

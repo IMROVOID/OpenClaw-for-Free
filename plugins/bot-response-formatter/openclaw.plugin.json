@@ -1,0 +1,14 @@
+{
+  "id": "bot-response-formatter",
+  "name": "Bot Response Formatter",
+  "description": "Formats agent thinking previews and context length / latency footers for bot replies",
+  "version": "1.0.0",
+  "configSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  },
+  "activation": {
+    "onStartup": true
+  }
+}

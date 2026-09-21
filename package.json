@@ -1,0 +1,40 @@
+{
+  "name": "openclaw-daytona-assistant",
+  "version": "2026.9.4",
+  "description": "Unified Multi-Agent AI & Free Cloud VPS Control Station (Daytona & Freestyle.sh)",
+  "type": "module",
+  "scripts": {
+    "start": "npx tsx src/control-panel/index.ts",
+    "start:bot": "npx tsx src/telegram-bot/index.ts",
+    "test": "npx tsx tests/run_all_tests.ts",
+    "test:all": "npx tsx tests/run_all_tests.ts",
+    "build": "npx tsx launchers/build.ts",
+    "build:panel": "npx tsx launchers/build.ts --panel",
+    "build:desktop": "npx tsx launchers/build.ts --desktop",
+    "typecheck": "npx tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "openclaw",
+    "daytona",
+    "freestyle",
+    "tui",
+    "multi-agent",
+    "llama-server",
+    "omniroute"
+  ],
+  "author": "OpenClaw-for-free Contributors",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "esbuild": "^0.28.2",
+    "postject": "^1.0.0-alpha.6",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "grammy": "^1.46.0"
+  }
+}

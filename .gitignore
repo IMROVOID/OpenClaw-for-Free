@@ -1,0 +1,79 @@
+# Git Ignore for OpenClaw Daytona Assistant
+
+# Private & Personal Temporary Docs
+docs/temp/
+
+# Environment and Secret Files
+.env
+*.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.token
+*.secret
+*.pfx
+*.p12
+*.pkcs12
+*.crt
+*.cer
+*.der
+*.kdbx
+id_rsa*
+id_ed25519*
+id_ecdsa*
+id_dsa*
+secrets/
+.secrets/
+*.keystore
+*.jks
+credentials.json
+*credential*
+client_secret*.json
+service-account*.json
+jwt*.key
+ssh_host_*
+known_hosts
+authorized_keys
+.npmrc
+
+# User Configuration & Local Data
+.openclaw-control-panel.json
+openclaw-control-panel.json
+data/
+.data/
+*.bak
+
+# Node & Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build Artifacts & Single Executable Blobs
+build/
+out/
+dist/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+*.map
+sea-prep*.blob
+*.blob
+launchers/*.cjs
+launchers/*.exe
+bin/
+bin/*.exe
+*.exe
+*.node
+*.dylib
+*.so
+*.dll
+
+# Logs & Ephemeral Files
+*.log
+logs/
+
+# Operating System Files
+.DS_Store
+Thumbs.db

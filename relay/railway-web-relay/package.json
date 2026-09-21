@@ -1,0 +1,19 @@
+{
+  "name": "railway-web-relay",
+  "version": "1.0.0",
+  "description": "Unified Web Reverse Proxy for OpenClaw, OmniRoute, and Llama WebUIs",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild server.ts --bundle --platform=node --format=esm --target=node22 --outfile=dist/server.js",
+    "start": "node dist/server.js",
+    "dev": "node --import tsx server.ts"
+  },
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "tsx": "^4.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0"
+  }
+}

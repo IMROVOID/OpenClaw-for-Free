@@ -1,0 +1,5 @@
+{
+  "main": "llama-connect.cjs",
+  "output": "sea-prep-llama.blob",
+  "disableExperimentalSEAWarning": true
+}

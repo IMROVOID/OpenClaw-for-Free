@@ -1,0 +1,20 @@
+{
+  "name": "llama-relay",
+  "version": "1.0.0",
+  "description": "Public OpenAI-compatible Relay for Daytona llama.cpp",
+  "main": "server.ts",
+  "scripts": {
+    "build": "npx esbuild server.ts --bundle --platform=node --target=node22 --outfile=dist/server.js",
+    "start": "node dist/server.js",
+    "dev": "npx tsx server.ts"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "esbuild": "^0.28.2",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}

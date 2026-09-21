@@ -1,0 +1,5 @@
+{
+  "main": "omniroute-connect.cjs",
+  "output": "sea-prep-omniroute.blob",
+  "disableExperimentalSEAWarning": true
+}

@@ -1,0 +1,5 @@
+{
+  "main": "control-panel.cjs",
+  "output": "sea-prep-control-panel.blob",
+  "disableExperimentalSEAWarning": true
+}
