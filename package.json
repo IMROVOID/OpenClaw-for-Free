@@ -1,17 +1,36 @@
 {
-  "name": "openclaw-daytona-assistant",
+  "name": "openclaw-for-free",
   "version": "2026.9.4",
   "description": "Unified Multi-Agent AI & Free Cloud VPS Control Station (Daytona & Freestyle.sh)",
   "type": "module",
+  "bin": {
+    "openclaw-for-free": "dist/cli.js",
+    "openclaw": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IMROVOID/OpenClaw-for-Free.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IMROVOID/OpenClaw-for-Free/issues"
+  },
+  "homepage": "https://github.com/IMROVOID/OpenClaw-for-Free#readme",
   "scripts": {
     "start": "npx tsx src/control-panel/index.ts",
     "start:bot": "npx tsx src/telegram-bot/index.ts",
     "test": "npx tsx tests/run_all_tests.ts",
     "test:all": "npx tsx tests/run_all_tests.ts",
+    "bundle:cli": "npx esbuild src/control-panel/index.ts --bundle --platform=node --format=esm --target=node22 --banner:js=\"#!/usr/bin/env node\" --outfile=dist/cli.js",
     "build": "npx tsx launchers/build.ts",
     "build:panel": "npx tsx launchers/build.ts --panel",
     "build:desktop": "npx tsx launchers/build.ts --desktop",
-    "typecheck": "npx tsc --noEmit"
+    "typecheck": "npx tsc --noEmit",
+    "prepublishOnly": "npm run bundle:cli"
   },
   "engines": {
     "node": ">=22.0.0"
