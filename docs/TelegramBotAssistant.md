@@ -64,7 +64,7 @@ Built using the **GrammY** framework, it connects directly with your cloud VPS i
 
 ```bash
 # Set credentials
-export TELEGRAM_BOT_TOKEN="123456789:AAEkd9342klsfj238947230492834"
+export TELEGRAM_BOT_TOKEN="123456789:your_telegram_bot_token_from_botfather"
 export TELEGRAM_OWNER_ID="123456789"
 
 # Start bot
@@ -74,13 +74,13 @@ npm run start:bot
 #### Option B: CLI Flags
 
 ```bash
-npx tsx src/telegram-bot/index.ts --token "123456789:AAEkd9342klsfj..." --owner 123456789
+npx tsx src/telegram-bot/index.ts --token "123456789:your_telegram_bot_token_from_botfather" --owner 123456789
 ```
 
 #### Option C: Windows PowerShell
 
 ```powershell
-$env:TELEGRAM_BOT_TOKEN="123456789:AAEkd9342klsfj238947230492834"
+$env:TELEGRAM_BOT_TOKEN="123456789:your_telegram_bot_token_from_botfather"
 $env:TELEGRAM_OWNER_ID="123456789"
 npm run start:bot
 ```
@@ -238,7 +238,7 @@ Type=simple
 User=daytona
 WorkingDirectory=/home/daytona/OpenClawDaytonaAssistant
 Environment=NODE_ENV=production
-Environment=TELEGRAM_BOT_TOKEN=123456789:AAEkd9342klsfj238947230492834
+Environment=TELEGRAM_BOT_TOKEN=123456789:your_telegram_bot_token_from_botfather
 Environment=TELEGRAM_OWNER_ID=123456789
 ExecStart=/usr/bin/npm run start:bot
 Restart=always

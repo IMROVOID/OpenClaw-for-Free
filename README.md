@@ -180,7 +180,7 @@ Control and provision Daytona and Freestyle cloud environments directly from you
 
 ```bash
 # Set your BotFather token and owner ID
-export TELEGRAM_BOT_TOKEN="123456789:AAEkd9342klsfj238947230492834"
+export TELEGRAM_BOT_TOKEN="123456789:your_telegram_bot_token_from_botfather"
 export TELEGRAM_OWNER_ID="123456789"
 
 # Start Telegram Bot Assistant
